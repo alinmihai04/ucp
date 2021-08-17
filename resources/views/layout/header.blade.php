@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 $me = me();
 $header_staff = App\Header::countHeaderStaff();
 $header_complaints = App\Header::countHeaderComplaints();
 $header_factions = App\Header::countHeaderFactions();
 $header_bids = App\Header::countHeaderBids();
-
+///
 ?>
 
 <div class="navbar">
@@ -18,7 +18,7 @@ $header_bids = App\Header::countHeaderBids();
 					{{config('app.title')}} Panel
 				</small>
 			</a>
-			<ul class="nav ace-nav pull-right">	
+			<ul class="nav ace-nav pull-right">
 				@if(is_object($me))
 					<li class="purple">
 						<a data-toggle="dropdown" class="dropdown-toggle" href="#" id="loadnotifications">
@@ -28,7 +28,7 @@ $header_bids = App\Header::countHeaderBids();
 								<span class='badge badge-important'>{{ $emails }}</span>
 							@else
 								<i class="icon-bell-alt"></i>
-								<span class='badge badge-grey'>0</span>							
+								<span class='badge badge-grey'>0</span>
 							@endif
 						</a>
 
@@ -39,7 +39,7 @@ $header_bids = App\Header::countHeaderBids();
 									Please wait...
 								</center>
 							</li>
-						</ul>										
+						</ul>
 					</li>
 				@endif
 				<li class="light-blue">
@@ -73,13 +73,13 @@ $header_bids = App\Header::countHeaderBids();
 								<i class="icon-lock"></i>
 									Autentificare in doi pasi
 								</a>
-							</li>							
+							</li>
 							<li>
 								<a href="{{url('/mycomplaints')}}">
 								<i class="icon-legal"></i>
 									Reclamatii create de mine
 								</a>
-							</li>								
+							</li>
 							<li class="divider"></li>
 							<li>
                                 <a href="{{ route('logout') }}"
@@ -92,7 +92,7 @@ $header_bids = App\Header::countHeaderBids();
                                     {{ csrf_field() }}
                                 </form>
 							</li>
-						</ul>												
+						</ul>
 					@endif
 				</li>
 			</ul>
@@ -110,7 +110,7 @@ $header_bids = App\Header::countHeaderBids();
 					<i class="icon-dashboard"></i>
 					<span class="menu-text"> Home </span>
 				</a>
-			</li>	
+			</li>
 			@if(is_object($me))
 				@if($me->user_group > 0)
 					<li>
@@ -125,7 +125,7 @@ $header_bids = App\Header::countHeaderBids();
 								<i class="icon-double-angle-right"></i>
 								<span class="menu-text"> Leader Panel </span>
 							</a>
-						</li>					
+						</li>
 					@endif
 				@endif
 				@if($me->user_admin > 0)
@@ -134,14 +134,14 @@ $header_bids = App\Header::countHeaderBids();
 							<i class="icon-sitemap red"></i>
 							<span class="menu-text"> Admin Panel </span>
 						</a>
-					</li>	
-				@endif				
+					</li>
+				@endif
 				<li>
 					<a href="{{url('/profile/'.$me->name)}}">
 						<i class="icon-smile"></i>
 						<span class="menu-text"> Profilul meu </span>
 					</a>
-				</li>		
+				</li>
 			@endif
 			<li>
 				<a href="{{url('/online')}}">
@@ -161,7 +161,7 @@ $header_bids = App\Header::countHeaderBids();
 					<i class="icon-bug"></i>
 					<span class="menu-text"> Beta testers </span>
 				</a>
-			</li>			
+			</li>
 			<li>
 				<a href="{{url('/search')}}">
 					<i class="icon-search"></i>
@@ -174,13 +174,13 @@ $header_bids = App\Header::countHeaderBids();
 					<span class="menu-text"> Reclamatii </span>
 					<span class="badge badge-yellow">{{ $header_complaints }}</span>
 				</a>
-			</li>	
+			</li>
 			<li>
 				<a href="{{url('/ban')}}">
 					<i class="icon-frown"></i>
 					<span class="menu-text"> Ban-uri </span>
 				</a>
-			</li>																
+			</li>
 			<li>
 				<a href="{{url('/group/list')}}">
 					<i class="icon-group"></i>
@@ -218,9 +218,9 @@ $header_bids = App\Header::countHeaderBids();
 							<i class="icon-double-angle-right"></i>
 							Afaceri
 						</a>
-					</li>											
+					</li>
 				</ul>
-			</li>					
+			</li>
 			<li>
 				<a href="{{url('/bids')}}">
 					<i class="icon-sitemap"></i>
@@ -228,17 +228,17 @@ $header_bids = App\Header::countHeaderBids();
 					<span class="badge badge-yellow">{{ $header_bids }}</span>
 				</a>
 			</li>
-			@if(is_object($me) && $me->user_admin > 0)	
+			@if(is_object($me) && $me->user_admin > 0)
 				<li>
 					<a href="{{url('/logs')}}">
 						<i class="icon-keyboard"></i>
 						<span class="menu-text"> Logs </span>
 					</a>
 				</li>
-			@endif				
+			@endif
 		</ul>
 		<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
 			<i id="sidebar-toggle-icon" class="ace-save-state ace-icon icon-double-angle-left" data-icon1="ace-icon icon-double-angle-left" data-icon2="ace-icon icon-double-angle-right"></i>
-		</div>				
+		</div>
 	</div>
 

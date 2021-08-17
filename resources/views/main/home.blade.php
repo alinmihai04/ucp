@@ -163,10 +163,10 @@
 							<span class="clearfix"></span>
 							<ul>
 								<li>Reclamatii normale: <b><a href="{{ url('/complaints/normal') }}">{{$complaints->where('reason', '!=', '2')->where('reason', '!=', '4')->where('reason', '!=', '6')->where('reason', '!=', '7')->where('status', '=', '0')->count()}} </b></a>  </li>
-								<li>Reclamatii staff: <b><a href="{{ url('/complaints/staff') }}">{{$complaints->where('reason', '=', '6')->where('status', '=', '0')->count()}} </b></a></li>
-								<li>Reclamatii lideri: <b><a href="{{ url('/complaints/leader') }}">{{$complaints->where('reason', '=', '7')->where('status', '=', '0')->count()}} </b></a></li>
-								<li>Reclamatii inselatorii: <b><a href="{{ url('/complaints/scam') }}">{{$complaints->where('reason', '=', '4')->where('status', '=', '0')->count()}} </b></a></li>
-								<li>Owner+: <b><a href="{{ url('/complaints/owner') }}">{{$complaints->where('status', '=', '2')->count()}} </b></a></li>
+								<li>Reclamatii staff: <b><a href="{{ url('/complaints/staff') }}">{{$complaints->where('reason', '=', '6')->where('status', '=', '0')->count()}} </a></b></li>
+								<li>Reclamatii lideri: <b><a href="{{ url('/complaints/leader') }}">{{$complaints->where('reason', '=', '7')->where('status', '=', '0')->count()}} </a></b></li>
+								<li>Reclamatii inselatorii: <b><a href="{{ url('/complaints/scam') }}">{{$complaints->where('reason', '=', '4')->where('status', '=', '0')->count()}} </a></b></li>
+								<li>Owner+: <b><a href="{{ url('/complaints/owner') }}">{{$complaints->where('status', '=', '2')->count()}} </a></b></li>
 							</ul>
 						</div>
 					</div>
