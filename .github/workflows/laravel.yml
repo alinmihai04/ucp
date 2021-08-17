@@ -5,33 +5,34 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-    
-deploy:
+jobs:
 
-  runs-on: ubuntu-latest
+  deploy:
 
-  steps:
+    runs-on: ubuntu-latest
 
-    - name: Checkout
+    steps:
 
-      uses: actions/checkout@v2
+      - name: Checkout
 
-    - name: Deployment
+        uses: actions/checkout@v2
 
-      uses: appleboy/ssh-action@main
+      - name: Deployment
 
-      with:
+        uses: appleboy/ssh-action@main
 
-        host: ${{ secrets.SSH_HOST }}
+        with:
 
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.SSH_HOST }}
 
-        username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-        script: |
+          username: ${{ secrets.SSH_USERNAME }}
 
-          cd /var/www/html/
+          script: |
 
-          git checkout -f 
+            cd /var/www/html/
 
-          git pull
+            git checkout -f 
+
+            git pull
