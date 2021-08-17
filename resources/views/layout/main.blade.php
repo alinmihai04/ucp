@@ -9,17 +9,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 	<!-- bootstrap & fontawesome -->
-	<link rel="stylesheet" href="{{ URL::asset('public/css/bootstrap.min.css') }}" />
-	<link rel="stylesheet" href="{{ URL::asset('public/css/bootstrap-responsive.min.css') }}" />
-	<link rel="stylesheet" href="{{ URL::asset('public/css/font-awesome.min.css') }}" />
-	<link rel="stylesheet" href="{{ URL::asset('public/css/custom.css') }}" />
+	<link rel="stylesheet" href="{{ URL::asset('css/bootstrap.min.css') }}" />
+	<link rel="stylesheet" href="{{ URL::asset('css/bootstrap-responsive.min.css') }}" />
+	<link rel="stylesheet" href="{{ URL::asset('css/font-awesome.min.css') }}" />
+	<link rel="stylesheet" href="{{ URL::asset('css/custom.css') }}" />
 
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet">
 
 	<!-- ace styles -->
-	<link rel="stylesheet" href="{{ URL::asset('public/css/ace.min.css') }}" />
-	<link rel="stylesheet" href="{{ URL::asset('public/css/ace-responsive.min.css') }}" />
-	<link rel="stylesheet" href="{{ URL::asset('public/css/ace-skins.min.css') }}" />
+	<link rel="stylesheet" href="{{ URL::asset('css/ace.min.css') }}" />
+	<link rel="stylesheet" href="{{ URL::asset('css/ace-responsive.min.css') }}" />
+	<link rel="stylesheet" href="{{ URL::asset('css/ace-skins.min.css') }}" />
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>

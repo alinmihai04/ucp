@@ -9,18 +9,18 @@
 	<a href="/terms">terms and conditions</a> / <a href="/privacy">privacy policy</a>
 	/ <a href="/contact">contact</a>
 	<br>
-	<img src="{{URL::asset('public/images/paysafecard.gif')}}" style="max-width: 150px"/>
+	<img src="{{URL::asset('images/paysafecard.gif')}}" style="max-width: 150px"/>
 </div></div></div></div>
 <script type="text/javascript">
-	window.jQuery || document.write("<script src='{{URL::asset('public/js/jquery-2.0.3.min.js')}}'>"+"<"+"/script>");
+	window.jQuery || document.write("<script src='{{URL::asset('js/jquery-2.0.3.min.js')}}'>"+"<"+"/script>");
 </script>
 <script type="text/javascript">
-	if('ontouchstart' in document.documentElement) document.write("<script src='{{ URL::asset('public/js/jquery.mobile.custom.min.js') }}'>"+"<"+"/script>");
+	if('ontouchstart' in document.documentElement) document.write("<script src='{{ URL::asset('js/jquery.mobile.custom.min.js') }}'>"+"<"+"/script>");
 </script>
-<script src="{{ URL::asset('public/js/bootstrap.min.js') }}"></script>
-<script src="{{ URL::asset('public/js/ace-elements.min.js') }}"></script>
-<script src="{{ URL::asset('public/js/ace.min.js') }}"></script>
-<script src="{{ URL::asset('public/js/jquery.collapser.min.js') }}"></script>
+<script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ URL::asset('js/ace-elements.min.js') }}"></script>
+<script src="{{ URL::asset('js/ace.min.js') }}"></script>
+<script src="{{ URL::asset('js/jquery.collapser.min.js') }}"></script>
 
 <script>
 
