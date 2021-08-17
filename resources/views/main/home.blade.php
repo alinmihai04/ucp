@@ -47,7 +47,7 @@
 			<div class="infobox-data">
 				<span class="infobox-data-number">{{$onlineusers}}</span>
 				<div class="infobox-content">
-					<a href="{{url('/online')}}">jucatori ii</a>
+					<a href="{{url('/online')}}">jucatori online</a>
 				</div>
 			</div>
 		</div>
