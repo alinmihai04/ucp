@@ -95,7 +95,7 @@ try {
     if ($branchRef != 'refs/heads/'.GITHUB_BRANCH) {
         die("Ignoring push to '$branchRef'");
     }
-
+   /// asda
     // ssh into the local server
     $sshSession = ssh2_connect('localhost', SSH_PORT);
     $authSuccess = ssh2_auth_pubkey_file(
