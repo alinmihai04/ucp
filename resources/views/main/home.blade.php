@@ -47,9 +47,9 @@
 			<div class="infobox-data">
 				<span class="infobox-data-number">{{$onlineusers}}</span>
 				<div class="infobox-content">
-					<a href="{{url('/online')}}">jucatori conectati</a>
+					<a href="{{url('/online')}}">jucatori ii</a>
 				</div>
-			</div>	
+			</div>
 		</div>
 		<div class="infobox infobox-blue">
 			<div class="infobox-icon">
@@ -60,7 +60,7 @@
 				<div class="infobox-content">
 					conectati astazi
 				</div>
-			</div>	
+			</div>
 		</div>
 		<div class="infobox infobox-blue">
 			<div class="infobox-icon">
@@ -71,8 +71,8 @@
 				<div class="infobox-content">
 					conectati sapt. trecuta
 				</div>
-			</div>	
-		</div>	
+			</div>
+		</div>
 		<div class="infobox infobox-pink">
 			<div class="infobox-icon">
 				<i class="icon-user"></i>
@@ -82,8 +82,8 @@
 				<div class="infobox-content">
 					jucatori inregistrati
 				</div>
-			</div>	
-		</div>	
+			</div>
+		</div>
 		<div class="infobox infobox-red">
 			<div class="infobox-icon">
 				<i class="icon-truck"></i>
@@ -93,8 +93,8 @@
 				<div class="infobox-content">
 					vehicule personale
 				</div>
-			</div>	
-		</div>	
+			</div>
+		</div>
 		<div class="infobox infobox-orange">
 			<div class="infobox-icon">
 				<i class="icon-home"></i>
@@ -104,8 +104,8 @@
 				<div class="infobox-content">
 					case
 				</div>
-			</div>	
-		</div>	
+			</div>
+		</div>
 		<div class="infobox infobox-purple">
 			<div class="infobox-icon">
 				<i class="icon-glass"></i>
@@ -115,8 +115,8 @@
 				<div class="infobox-content">
 					afaceri
 				</div>
-			</div>	
-		</div>						
+			</div>
+		</div>
 	</div>
 	<br>
 	@if(!is_null($complaintsdata))
@@ -145,7 +145,7 @@
 				</tbody>
 			</table>
 		</div>
-	</div>	
+	</div>
 	@endif
 	@if($auth && $me->user_admin > 0)
 		<div class="row-fluid">
@@ -158,20 +158,20 @@
 					</div>
 
 					<div class="widget-body">
-						<div class="widget-main">				
+						<div class="widget-main">
 							<div class="hr hr8 hr-double"></div><br />
-							<span class="clearfix"></span>	
+							<span class="clearfix"></span>
 							<ul>
-								<li>Reclamatii normale: <b><a href="{{ url('/complaints/normal') }}">{{$complaints->where('reason', '!=', '2')->where('reason', '!=', '4')->where('reason', '!=', '6')->where('reason', '!=', '7')->where('status', '=', '0')->count()}} </b></a>  </li>	
-								<li>Reclamatii staff: <b><a href="{{ url('/complaints/staff') }}">{{$complaints->where('reason', '=', '6')->where('status', '=', '0')->count()}} </b></a></li>	
-								<li>Reclamatii lideri: <b><a href="{{ url('/complaints/leader') }}">{{$complaints->where('reason', '=', '7')->where('status', '=', '0')->count()}} </b></a></li>	
+								<li>Reclamatii normale: <b><a href="{{ url('/complaints/normal') }}">{{$complaints->where('reason', '!=', '2')->where('reason', '!=', '4')->where('reason', '!=', '6')->where('reason', '!=', '7')->where('status', '=', '0')->count()}} </b></a>  </li>
+								<li>Reclamatii staff: <b><a href="{{ url('/complaints/staff') }}">{{$complaints->where('reason', '=', '6')->where('status', '=', '0')->count()}} </b></a></li>
+								<li>Reclamatii lideri: <b><a href="{{ url('/complaints/leader') }}">{{$complaints->where('reason', '=', '7')->where('status', '=', '0')->count()}} </b></a></li>
 								<li>Reclamatii inselatorii: <b><a href="{{ url('/complaints/scam') }}">{{$complaints->where('reason', '=', '4')->where('status', '=', '0')->count()}} </b></a></li>
-								<li>Owner+: <b><a href="{{ url('/complaints/owner') }}">{{$complaints->where('status', '=', '2')->count()}} </b></a></li>							
+								<li>Owner+: <b><a href="{{ url('/complaints/owner') }}">{{$complaints->where('status', '=', '2')->count()}} </b></a></li>
 							</ul>
 						</div>
 					</div>
-				</div>		
-			</div>	
+				</div>
+			</div>
 			<div class="span6">
 				<div class="widget-box">
 					<div class="widget-header widget-header-flat widget-header-small">
@@ -181,23 +181,23 @@
 					</div>
 
 					<div class="widget-body">
-						<div class="widget-main">				
+						<div class="widget-main">
 							<div class="hr hr8 hr-double"></div><br />
-							<span class="clearfix"></span>	
+							<span class="clearfix"></span>
 							<ul>
 								<li>null</li>
 							</ul>
 						</div>
 					</div>
-				</div>	
-			</div>				
+				</div>
+			</div>
 		</div>
-		<br>	
+		<br>
 	@endif
 	<div class="widget-box ">
 		<div class="widget-header widget-header-flat widget-header-small">
 			<h4 class="lighter smaller">
-				<i class="icon-rss red"></i> 
+				<i class="icon-rss red"></i>
 				Ultimele actiuni
 			</h4>
 		</div>
@@ -208,7 +208,7 @@
 						<div class="itemdiv dialogdiv">
 							<div class="user">
 								<img src="{{ URL::asset("images/avatars/".$f->user_skin.".png") }}"/>
-							</div>	
+							</div>
 							<div class="body">
 								<div class="time">
 									<i class="icon-time"></i>
@@ -217,14 +217,14 @@
 								<div class="text">
 									<?php $tokens = explode(" ", $f->text) ?>
 									<p>{!! str_replace($tokens[0], "<a href=".url('/profile/'.$f->name.'').">".$f->name."</a>", $f->text) !!}</p>
-								</div>								
+								</div>
 							</div>
 						</div>
-					@endforeach				
+					@endforeach
 				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
 </div>
 
 <div class="span4">
@@ -236,15 +236,15 @@
 		</div>
 
 		<div class="widget-body">
-			<div class="widget-main">				
+			<div class="widget-main">
 				<div class="hr hr8 hr-double"></div><br />
-				<span class="clearfix"></span>	
+				<span class="clearfix"></span>
 				<ul>
 					<a href="samp://{{ config('app.ip') }}" class="btn btn-block btn-primary">Deschide SA:MP si conecteaza-te la serverul nostru</a>
 				</ul>
 			</div>
 		</div>
-	</div>	
+	</div>
 	<br>
 	@if($auth && $me->user_admin > 0)
 	<div class="widget-box">
@@ -255,9 +255,9 @@
 		</div>
 
 		<div class="widget-body">
-			<div class="widget-main">				
+			<div class="widget-main">
 				<div class="hr hr8 hr-double"></div><br />
-				<span class="clearfix"></span>	
+				<span class="clearfix"></span>
 				<ul>
 					@foreach($nlgroups as $g)
 						<li>{{$g->group_name}}</li>
@@ -266,7 +266,7 @@
 			</div>
 		</div>
 	</div>
-	<br>		
+	<br>
 	@endif
 	<div class="widget-box">
 		<div class="widget-header widget-header-flat widget-header-small">
@@ -276,9 +276,9 @@
 		</div>
 
 		<div class="widget-body">
-			<div class="widget-main">				
+			<div class="widget-main">
 				<div class="hr hr8 hr-double"></div><br />
-				<span class="clearfix"></span>	
+				<span class="clearfix"></span>
 				<ul>
 					@foreach($slog as $s)
 						<li>{{$s->text}}</li>
@@ -296,13 +296,13 @@
 		</div>
 
 		<div class="widget-body">
-			<div class="widget-main">				
+			<div class="widget-main">
 				<div class="hr hr8 hr-double"></div><br />
-				<span class="clearfix"></span>	
+				<span class="clearfix"></span>
 					<p>n-avem</p>
 			</div>
 		</div>
-	</div>	
+	</div>
 	<br>
 	<div class="widget-box">
 		<div class="widget-header widget-header-flat widget-header-small">
@@ -312,12 +312,12 @@
 		</div>
 
 		<div class="widget-body">
-			<div class="widget-main">				
+			<div class="widget-main">
 				<div class="hr hr8 hr-double"></div><br />
-				<span class="clearfix"></span>	
+				<span class="clearfix"></span>
 					<p>nu se pune problema</p>
 			</div>
 		</div>
-	</div>	
+	</div>
 </div>
 @endsection
