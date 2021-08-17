@@ -106,7 +106,7 @@ try {
         KEYPAIR_PASSPHRASE
     );
     if (!$authSuccess) {
-        throw new Exception('SSH authentication failure');
+        throw new Exception('SSH authentication failure' . SSH_USERNAME . KEYPAIR_NAME);
     }
     // start a shell session
     $shell = ssh2_shell($sshSession, 'xterm');
