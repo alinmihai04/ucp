@@ -14,7 +14,7 @@
 //Route::get('/1234', 'GroupController@migrate_raport');
 
 Route::middleware('2fa')->group(function() {
-    Route::get('/', 'MainController@home')->middleware('2fa');
+    Route::get('/', 'MainController@home');
     Route::get('/online', 'MainController@online');
     Route::get('/staff', 'MainController@staff');
     Route::get('/search', 'MainController@search');
