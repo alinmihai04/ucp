@@ -27,7 +27,7 @@
 			@if($auth && $me->user_admin >= 1)
 				<td>online 7d</td>
 				<td>last rank change</td>
-			@endif			
+			@endif
 		</tr>
 		@foreach($data->where('user_admin', '>', 0)->sortByDesc('user_admin') as $d)
 		<tr>
@@ -51,7 +51,7 @@
 				@endif
 				@if($d->user_beta == 1)
 					<span class="label label-pink arrowed-in-right"><i class="icon-bug white"></i> beta tester </span>
-				@endif			
+				@endif
 
 				@if($auth && $me->user_admin >= 6)
 					<a href="{{url('/admin/remove/'.$d->id)}}" onclick="return confirm('Esti sigur ca vrei sa il scoti pe acest jucator din staff?');"><i class="icon-remove-circle red"></i></a>
@@ -62,7 +62,7 @@
 
 					- <a href="{{url('/admin/support/1/' . $d->id)}}" onclick="return confirm('Esti sigur ca vrei sa il promovezi pe acest admin la SUPPORT LEVEL 1?');"><i class="icon-ticket green"></i></a>
 					- <a href="{{url('/admin/support/2/' . $d->id)}}" onclick="return confirm('Esti sigur ca vrei sa il promovezi pe acest admin la SUPPORT LEVEL 2?');"><i class="icon-ticket blue"></i><i class="icon-ticket blue"></i></a>
-				@endif				
+				@endif
 			</td>
 			<td>{{$d->last_login}}</td>
 			@if($auth && $me->user_admin >= 1)
@@ -76,7 +76,7 @@
 				<td>
 					{{ $d->staffchange }} days ago
 				</td>
-			@endif			
+			@endif
 		</tr>
 		@endforeach
 	</tbody>
@@ -95,7 +95,7 @@
 				<td>/n - last 7 days</td>
 				<td>online last 7 days</td>
 				<td>last rank change</td>
-			@endif			
+			@endif
 		</tr>
 		@foreach($data->where('user_helper', '>', 0)->sortByDesc('user_helper') as $d)
 		<tr>
@@ -110,18 +110,18 @@
 					@else
 						{{ $d->last_nre }}
 					@endif
-				</td>				
+				</td>
 				<td>
 					@if($d->last7 < 10)
 						<b><span class="red"> {{ $d->last7 }}</span></b>
 					@else
 						{{ $d->last7 }}
 					@endif
-				</td>			
+				</td>
 				<td>
 					{{ $d->staffchange }} days ago
-				</td>				
-			@endif			
+				</td>
+			@endif
 		</tr>
 		@endforeach
 	</tbody>
@@ -135,18 +135,18 @@
 			<td>Status</td>
 			<td>Name</td>
 			<td>Faction</td>
-			<td>Faction members</td>		
+			<td>Faction members</td>
 			<td>Last online</td>
 			@if($auth && $me->user_admin >= 1)
 				<td>online last 7 days</td>
-			@endif				
+			@endif
 		</tr>
 		@foreach($data->where('user_grouprank', '=', 7)->sortBy('user_group') as $d)
 		<tr>
 			<td>{!! $d->user_status == 0 ? "<span class='badge badge-grey'>offline</span>" : "<span class='badge badge-success'>online</span>" !!}</td>
 			<td><a href="{{url('/profile/'.$d->name.'')}}">{{$d->name}}</a></td>
 			<td><a href="{{url('/group/members/'.$d->user_group.'')}}">{{$groups->where('group_id', '=', $d->user_group)->first()->group_name}}</td>
-			<td>{{$groups->where('group_id', '=', $d->user_group)->first()->group_members}}/{{$groups->where('group_id', '=', $d->user_group)->first()->group_slots}}</td>	
+			<td>{{$groups->where('group_id', '=', $d->user_group)->first()->group_members}}/{{$groups->where('group_id', '=', $d->user_group)->first()->group_slots}}</td>
 			<td>{{$d->last_login}}</td>
 			@if($auth && $me->user_admin >= 1)
 				<td>
@@ -155,8 +155,8 @@
 					@else
 						{{ $d->last7 }}
 					@endif
-				</td>			
-			@endif					
+				</td>
+			@endif
 		</tr>
 		@endforeach
 	</tbody>

@@ -15,9 +15,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\TestCommand',
+        Commands\RaportProcess::class,
     ];
-    
+
     /**
      * Define the application's command schedule.
      *
@@ -26,10 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call('App\Task@header_factions')->everyMinute();
-
-
-        $schedule->call('App\Task@process_raports')->everyMinute()->evenInMaintenanceMode();
+        $schedule->command('raport:process')->dailyAt('20:05');
     }
 
     /**

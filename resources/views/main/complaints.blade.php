@@ -8,12 +8,14 @@
 @section('content')
 <div class="col-xs-12 center">
 	<div class="table-responsive">
+        @if(!isset($mycomplaints))
 		<div class="pull-left control-group">
 			<a href="{{ url('/complaint/create') }}" class="btn btn-danger">New Complaint</a>
 		</div>
 		<div class="pull-left control-group">
-			&nbsp;<a href="http://blackpanel.bugged.ro/mycomplaints" class="btn btn-info">Reclamatii create de mine</a>
+			&nbsp;<a href="{{ url('/mycomplaints') }}" class="btn btn-info">Reclamatii create de mine</a>
 		</div>
+        @endif
 		<br>
 		<table id="sample-table-1" class="table table-striped table-bordered table-hover">
 			<thead>
@@ -75,7 +77,7 @@
 							@endif
 						</td>
 					</tr>
-				@endforeach	
+				@endforeach
 				@foreach($data->where('status', '=', 2) as $complaint)
 					<tr>
 						<td>
@@ -99,7 +101,7 @@
 							@endif
 						</td>
 					</tr>
-				@endforeach	
+				@endforeach
 				@foreach($data->where('status', '=', 3) as $complaint)
 					<tr class='warning'>
 						<td>
@@ -123,7 +125,7 @@
 							@endif
 						</td>
 					</tr>
-				@endforeach												
+				@endforeach
 			</tbody>
 		</table>
 	</div>

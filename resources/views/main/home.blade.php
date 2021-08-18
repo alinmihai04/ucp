@@ -7,6 +7,20 @@
 
 @section('content')
 <div class="span8">
+    <div class="alert alert-primary">
+        <h4><b> Demo version </b></h4>
+        This UCP was designed to serve a GTA San Andreas Multiplayer (SAMP) server. There are different things that players with different access can see. <br>
+        The main language used on this UCP is <b>Romanian</b>, but all the things designed for this demo will be in English.<br>
+        For this Demo version, you have the following accounts, on this accounts you can't activate 'Two Factor Auth' to prevent locking the account.<br><br>
+        <b>username - password</b><br><br>
+        Full owner access: <b>alin - admin</b><br>
+        Helper level access: <b>helper - helper</b><br>
+        Leader level access: <b>leader - leader</b><br>
+        Player (with faction) level access: <b>player - player</b><br><br>
+        To test out 'Two Factor Auth' feature, there are 10.000 dummy accounts, 900 accounts are set as being online on the server <br>
+        username: <b>seed_1 ... seed_10000</b> and password: <b>secret</b>
+
+    </div>
 	@if($auth && $me->user_status >= 1 && $me->last_ip != \Request::ip())
 		<div class="alert alert-error">
 			<b><i class="icon-warning-sign"></i> E posibil ca altcineva sa fie logat pe contul tau</b>
@@ -25,9 +39,6 @@
 	@endif
 	@if($auth && $me->user_2fa == 0)
 	<div class="alert alert-info">
-		<button type="button" class="close" data-dismiss="alert">
-			<i class="icon-remove"></i>
-		</button>
 		<h3>Autentificare in doi pasi</h3>
 		<hr>
 		<p>
@@ -35,7 +46,11 @@
 			Ai nevoie doar de un telefon mobil cu sistem de operare Android sau iOS.<br>
 		</p>
 		<p>
-			<a href="{{ url('/account/security') }}" class="btn btn-sm btn-success">Activeaza acum</a>
+            @if($me->name == "Alin" || $me->name == "helper" || $me->name == "leader" || $me->name == "player")
+                <span class="text-error">(Demo) You can't activate Two factor auth on this account.</span>
+            @else
+			    <a href="{{ url('/account/security') }}" class="btn btn-sm btn-success">Activeaza acum</a>
+            @endif
 		</p>
 	</div>
 	@endif
@@ -176,7 +191,7 @@
 				<div class="widget-box">
 					<div class="widget-header widget-header-flat widget-header-small">
 						<h5>
-							<i class="icon-ticket"></i> Status Tickete
+							<i class="icon-ticket"></i> Status Tickete (not implemented)
 						</h5>
 					</div>
 
@@ -215,8 +230,11 @@
 										<span class="green">{{$f->time}}</span>
 								</div>
 								<div class="text">
-									<?php $tokens = explode(" ", $f->text) ?>
-									<p>{!! str_replace($tokens[0], "<a href=".url('/profile/'.$f->name.'').">".$f->name."</a>", $f->text) !!}</p>
+									<?php
+                                        $tokens = explode(" ", $f->text);
+                                        $tokens[0] = '/'.preg_quote($tokens[0], '/').'/';
+                                    ?>
+									<p>{!! preg_replace($tokens[0], "<a href=".url('/profile/'.$f->name.'').">".$f->name."</a>", $f->text, 1) !!}</p>
 								</div>
 							</div>
 						</div>

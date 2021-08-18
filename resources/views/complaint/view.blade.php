@@ -188,7 +188,7 @@
 											</span>
 											<span class="pull-right">
 												@if(is_object($me) && ($me->id == $p->user_id || $me->user_admin >= 3))
-														<a href="{{ url('/post/edit/' . $p->id) }}"><i class="icon-edit red"></i></a>
+
 													@if($me->user_admin >= 3)
 														@if($p->hidden == 0)
 															<a href="{{ url('/post/delete/' . $p->id) }}" onclick="return confirm('Esti sigur ca vrei sa ascunzi acest comentariu?');"><i class="icon-trash red"></i></a>
@@ -239,9 +239,6 @@
 							@endif
 						@endif
 						<br><br>
-						@if($me->user_admin > 0 && $data->status == 0 && $data->faction == 0)
-							{!! Form::submit('Dovezi insuficiente', ['class' => 'btn btn-small btn-success', 'name' => 'dovezi', 'onclick' => 'return confirm("Esti sigur ca vrei sa trimiti un raspuns automat pentru dovezi insuficiente la aceasta reclamatie?");']) !!}
-						@endif
 					@endif
 
 					{!! Form::close() !!}

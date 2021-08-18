@@ -7,6 +7,8 @@ use Cache;
 use DB;
 use Auth;
 use URL;
+use Hash;
+
 
 class SecurityController extends Controller
 {
@@ -41,27 +43,29 @@ class SecurityController extends Controller
         if($valid)
         {
         	session()->flash('success', 'Code accepted!');
-        	session()->put('2fa_enabled', 1);
+        	session()->put('google2fa_passed', 1);
+        	session()->remove('force_2fa');
+
             return redirect(URL::previous());
         }
         else
         {
         	session()->flash('error', 'Invalid application code. Please try again.');
             return redirect('/');
-        }    	
+        }
     }
     public function view2fa()
     {
         $me = me();
 
-        if($me->user_2fa == 1)
+        if($me->name == "Alin" || $me->name == "helper" || $me->name == "leader" || $me->name == "player")
         {
-            session()->flash('error', 'Ai activat deja autentificarea in 2 pasi.');
+            session()->flash('error', "(Demo) You can't activate 'Two Factor Auth' on this account.");
             return redirect('/');
         }
 
-        return view('auth.twofactor');
-    }    
+        return view('auth.twofactor')->with('userdata', $me);
+    }
     public function process2fa()
     {
         $me = me();
@@ -91,5 +95,32 @@ class SecurityController extends Controller
         );
 
         return view('auth.twofactor2')->with('QR_Image', $QR_Image)->with('secret', $google2fa_secret);
-    }    
+    }
+
+    public function disable2fa()
+    {
+        $me = me();
+
+        if($me->user_2fa == 0)
+        {
+            session()->flash('error', "Nu ai autentificarea in 2 factori activa.");
+            return redirect('/account/security');
+        }
+
+        if(!Hash::check($_POST['password'], $me->password))
+        {
+            session()->flash('error', "Parola introdusa nu este aceeasi cu parola contului.");
+            return redirect('/account/security');
+        }
+        else
+        {
+            session()->remove('google2fa_passed');
+
+            DB::table('users')->where('id','=', $me->id)->update(['user_2fa' => 0, 'user_2fakey' => 'disabled']);
+            Cache::delete('userdata' . $me->id);
+
+            session()->flash('success', "Autentificarea in 2 pasi a fost dezactivata cu succes.");
+            return redirect('/account/security');
+        }
+    }
 }

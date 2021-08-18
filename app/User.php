@@ -66,7 +66,7 @@ class User extends Authenticatable
 
             Cache::add("username".$user, $value, 5);
         }
-        return $value;      
+        return $value;
     }
 
 
@@ -76,7 +76,7 @@ class User extends Authenticatable
         return 1;
     }
     public static function getInternalId($name)
-    {        
+    {
         if(Cache::has("internal".$name.""))
         {
             $value = Cache::get("internal".$name."");
@@ -92,7 +92,7 @@ class User extends Authenticatable
 
             Cache::add("internal".$name."", $value, 5);
         }
-        return $value;         
+        return $value;
     }
     public static function fetchUserData($user)
     {
@@ -111,7 +111,7 @@ class User extends Authenticatable
 
             Cache::add("userdata" . $user, $value, 3);
         }
-        return $value->first();          
+        return $value->first();
     }
     public static function getMoney($user)
     {
@@ -130,7 +130,7 @@ class User extends Authenticatable
             $value = DB::table('faction_logs')->where('player', '=', $user)->orderBy('id', 'desc')->get();
             Cache::add("userfh".$user, $value, 3);
         }
-        return $value;          
+        return $value;
     }
 
     public static function getPlayerLastPunish($user)
@@ -149,13 +149,18 @@ class User extends Authenticatable
     public static function getPlayerLastTransactions($user)
     {
         $value = DB::table('player_logs')->whereRaw("(user_id='". $user . "' OR alt_user='" . $user . "') AND type='transaction'")->orderBy('entry', 'desc')->limit(20)->get();
-        return $value;        
+        return $value;
     }
 
     public static function getPlayerBanStatus($user)
     {
         $value = Cache::remember('banstats'.$user, 5, function() use ($user) {
-            return DB::table('bans')->where('ban_playername', '=', self::getName($user))->where('ban_expiretimestamp', '>=', time())->get();
+            return DB::table('bans')
+                ->where('ban_playername', '=', self::getName($user))
+                ->where(function($query) {
+                    $query->where('ban_expiretimestamp', '>=', time())
+                          ->orWhere('ban_permanent', '=', 1);
+            })->get();
         });
         return $value->first();
     }
@@ -212,7 +217,7 @@ class User extends Authenticatable
         $friends = Cache::remember('userfriends' . $user, 5, function() use ($user) {
             return DB::table('player_friends')->where('friendid', '=', $user)->get();
         });
-        
-        return $friends;       
+
+        return $friends;
     }
 }

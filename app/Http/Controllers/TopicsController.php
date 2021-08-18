@@ -7,11 +7,20 @@ use App\User;
 use Auth;
 use Cache;
 use DB;
+use App\Complaint;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 
 class TopicsController extends Controller
 {
+    public function myComplaints()
+    {
+
+        $data = Cache::remember('mycomplaints', 5, function() {
+            return DB::table('panel_topics')->where('type', '=', 1)->where('creator_id', '=', me()->id)->join('users', 'panel_topics.user_id', '=', 'users.id')->select('panel_topics.id', 'panel_topics.creator_name', 'panel_topics.reason', 'panel_topics.time', 'panel_topics.status', 'users.name', 'users.user_group')->orderBy('id', 'desc')->paginate(30);
+        });
+        return view('main.complaints')->with('data', $data)->with('mycomplaints', 1);
+    }
     public function complaintsList()
     {
     	$data = Cache::remember('complaints', 5, function() {
@@ -365,6 +374,50 @@ class TopicsController extends Controller
             session()->flash('success', "You moved this topic to 'Owner+'.");
             return redirect('/complaint/view/' . $complaint);
         }
+        else if(isset($_POST['jail']))
+        {
+            $jailtime = intval($_POST['time']);
+            $reason = $_POST['reason'];
+
+            $text = "Admin " . $me->name . " <b>jailed</b> player <b>" . User::getName($topicdata->user_id) . "</b> for <b>" . $jailtime . "</b> minutes, reason: <b>". $reason ."</b>";
+            $email = "Reclamatia creata de " . User::getName($topicdata->creator_id) . " a fost inchisa de adminul " . $me->name . ". Ai primit jail pentru " . $jailtime . " minute in urma acesteia.";
+            $log = "AdmPanel: " . User::getName($topicdata->user_id) . "[user:" . $topicdata->user_id . "] has been jailed by " . $me->name . "[admin:" . $me->id . "] for " . $jailtime . " minutes, reason: ". $reason . ".";
+
+            email($topicdata->user_id, $email, '/complaint/view/' . $complaint);
+
+            PostController::addPost($complaint, $text, me());
+            punish_log($topicdata->user_id, $log);
+
+            UserController::jail($topicdata->user_id, $me->id, $jailtime, $reason, 1, $complaint);
+
+            DB::table('panel_topics')->where('id', '=', $complaint)->update(['status' => 1, 'responser' => $me->id]);
+            Cache::forget('topicdata' . $complaint);
+
+            session()->flash('This player has been jailed for ' . $jailtime . " minutes with licence suspended.");
+            return redirect('/complaint/view/' . $complaint);
+        }
+        else if(isset($_POST['mute']))
+        {
+            $time = intval($_POST['time']);
+            $reason = $_POST['reason'];
+
+            $text = "Admin " . $me->name . " <b>muted</b> player <b>" . User::getName($topicdata->user_id) . "</b> for <b>" . $time . "</b> minutes, reason: <b>". $reason ."</b>";
+            $email = "Reclamatia creata de " . User::getName($topicdata->creator_id) . " a fost inchisa de adminul " . $me->name . ". Ai primit mute pentru " . $time . " minute in urma acesteia.";
+            $log = "AdmPanel: " . User::getName($topicdata->user_id) . "[user:" . $topicdata->user_id . "] has been muted by " . $me->name . "[admin:" . $me->id . "] for " . $time . " minutes, reason: ". $reason . ".";
+
+            email($topicdata->user_id, $email, '/complaint/view/' . $complaint);
+
+            PostController::addPost($complaint, $text, me());
+            punish_log($topicdata->user_id, $log);
+
+            UserController::mute($topicdata->user_id, $me->id, $time, $reason, $complaint);
+
+            DB::table('panel_topics')->where('id', '=', $complaint)->update(['status' => 1, 'responser' => $me->id]);
+            Cache::forget('topicdata' . $complaint);
+
+            session()->flash('This player has been muted for ' . $time . " minutes.");
+            return redirect('/complaint/view/' . $complaint);
+        }
 
         session()->flash('error', 'Select an action first.');
         return redirect('/complaint/view' . $complaint);
@@ -410,5 +463,43 @@ class TopicsController extends Controller
 
         session()->flash('error', 'Invalid request.');
         return redirect('/complaint/view/' . $complaint);
+    }
+
+    public function viewReasonchange($topic)
+    {
+        $topicData = Cache::remember('topicdata' . $topic, 60, function() use ($topic) {
+            return DB::table('panel_topics')->where('id', '=', $topic)->get()->first();
+        });
+
+        if(!is_object($topicData))
+        {
+            session()->flash('error', 'Invalid topic data.');
+            return redirect('/');
+        }
+
+        $userData = User::fetchUserData($topicData->user_id);
+
+        return view('complaint.reasonchange')->with('user', $userData)->with('topicID', $topic);
+    }
+
+    public function processReasonchange($topic)
+    {
+        if($_POST['reason'] < 1 || $_POST['reason'] > 7)
+        {
+            session()->flash('error', 'Invalid reason.');
+            return redirect('/complaint/view/' . $topic);
+        }
+
+        $me = me();
+
+        DB::table('panel_topics')->where('id', '=', $topic)->update(['reason'=>$_POST['reason']]);
+
+        $text = $me->name . " changed this complaint reason to: " . Complaint::$reason_text[$_POST['reason']];
+        PostController::addPost($topic, $text, $me);
+
+        Cache::forget('topicdata' . $topic);
+
+        session()->flash('success', 'Complaint reason changed!');
+        return redirect('/complaint/view/' . $topic);
     }
 }

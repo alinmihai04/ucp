@@ -9,6 +9,7 @@
 <div class="page-header">
 	<h1>Lista Factiuni</h1>
 </div>
+<h4><a href="{{url('/logs/raport')}}">Raport processing history </a></h4>
 <table class="table table-striped table-bordered">
 	<thead>
 		<tr>

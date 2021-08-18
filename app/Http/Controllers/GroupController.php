@@ -24,7 +24,7 @@ class GroupController extends Controller
     }
     public static function members($group)
     {
-    	$value = DB::table('f_members')->where('faction', '=', $group)->join('users', 'users.id', '=', 'f_members.user')->select(array(DB::raw("TIMESTAMPDIFF(DAY, f_members.joined, NOW()) AS days"), 'f_members.*', 'users.name', 'users.user_groupskin', 'users.last_login'))->get();
+    	$value = DB::table('f_members')->where('faction', '=', $group)->join('users', 'users.id', '=', 'f_members.user')->select(array(DB::raw("TIMESTAMPDIFF(DAY, f_members.joined, NOW()) AS days"), 'f_members.*', 'users.id', 'users.name', 'users.user_groupskin', 'users.last_login'))->get();
 
         foreach($value as $v)
         {
@@ -40,7 +40,7 @@ class GroupController extends Controller
     {
         $groupname = Group::getGroupName($group);
 
-        $value = DB::table('flogs')->where('faction', '=', $group);
+        $value = DB::table('flogs')->where('faction', '=', $group)->paginate(50);
 
         return view('group.logs', ['data' => $value, 'group' => $group, 'groupname' => $groupname]);
     }
@@ -320,6 +320,32 @@ class GroupController extends Controller
         session()->flash('success', 'Numarul minim de ore a fost modificat (acum este nevoie de ' . $amount . ' ore la raportul de activitate).');
         return redirect('/admin');
     }
+    public function appStatus($group)
+    {
+        $me = me();
+        $data = Group::getGroupData($group);
+
+        if($me->user_admin < 5 && ($me->user_group != $group || $me->user_grouprank < 6))
+        {
+            session()->flash('error', 'Unauthorized access.');
+            return redirect('/');
+        }
+
+        if($data->group_application == 1)
+        {
+            session()->flash('success', 'Applications closed.');
+            DB::table('groups')->where('group_id', '=', $group)->update(['group_application' => 0]);
+        }
+        else
+        {
+            session()->flash('success', 'Applications opened.');
+            DB::table('groups')->where('group_id', '=', $group)->update(['group_application' => 1]);
+        }
+
+        Cache::forget('groupdata'.$group);
+
+        return redirect('/group/list');
+    }
     public function leader()
     {
         $me = me();
@@ -352,4 +378,5 @@ class GroupController extends Controller
         });
         return view('group.applications')->with('groupname', Group::getGroupName($group))->with('data', $data);
     }
+
 }

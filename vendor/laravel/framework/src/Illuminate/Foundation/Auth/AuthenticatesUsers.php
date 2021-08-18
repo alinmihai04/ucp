@@ -118,10 +118,12 @@ trait AuthenticatesUsers
     {
         session()->flash('success', 'You have been logged in.');
 
+        session()->put($request->force_2fa);
         $me = me();
-        $ip = $request->server('SERVER_ADDR');
+        $ip = \Request::ip();
         $pid = "[p" . md5($request->server('SERVER_ADDR')) . "]";
-        user_log($me->id, 0, $me->name . "[user:" . $me->id . "] logged in (panel). IP: <a href='" . url('/logs/ip/' . $ip) . "'>" . $ip . "</a> / <a href='" . url('/logs/browser/' . $pid) . "'>" . $pid . "</a>", "panel"); 
+        user_log($me->id, 0, $me->name . "[user:" . $me->id . "] logged in (panel). IP: <a href='" . url('/logs/ip/' . $ip) . "'>" . $ip . "</a> / <a href='" . url('/logs/browser/' . $pid) . "'>" . $pid . "</a>", "panel");
+        \DB::table('users')->where('id', '=', $me->id)->update(['panel_lastip' => $ip]);
     }
 
     /**

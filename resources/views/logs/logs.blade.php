@@ -13,7 +13,7 @@
 	<tbody>
 		@foreach($data as $d)
 			<tr>
-				<td>{!! findProfile($d->text) !!}</td>
+				<td>{!! $d->text !!}</td>
 				<td>{{$d->time}}</td>
 				<td>{{$d->type}}</td>
 			</tr>

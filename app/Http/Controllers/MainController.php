@@ -25,19 +25,19 @@ class MainController extends Controller
     	});
     	$registered = Cache::remember('registered', 60, function() {
     		return DB::table('users')->count();
-    	}); 
+    	});
     	$cars = Cache::remember('cars', 60, function() {
     		return DB::table('player_vehicles')->count();
     	});
     	$houses = Cache::remember('houses', 300, function() {
     		return DB::table('houses')->count();
-    	});  
+    	});
     	$biz = Cache::remember('biz', 300, function() {
     		return DB::table('businesses')->count();
-    	});    
+    	});
     	$flog = Cache::remember('flog', 3, function() {
     		return DB::table('faction_logs')->join('users', 'users.id', '=', 'faction_logs.player')->select('faction_logs.*', 'users.name', 'users.user_skin')->orderBy('id', 'desc')->limit(10)->get();
-    	});    
+    	});
         $slog = Cache::remember('slog', 3, function() {
             return DB::table('staff_logs')->orderBy('id', 'desc')->limit(10)->get();
         });
@@ -76,7 +76,7 @@ class MainController extends Controller
                 return DB::table('panel_topics')->where('type', '=', 1)->where('status', '=', 0)->orWhere('status', '=', 4)->orWhere('status', '=', 2)->get();
             });
 
-            return view('main.home', ['onlineusers' => $onlineusers, 'onlinetoday' => $onlinetoday, 'onlineweek' => $onlineweek, 'registered' => $registered, 'cars' => $cars, 'houses' => $houses, 'biz' => $biz, 'flog' => $flog, 'slog' => $slog, 'me' => $me, 'auth' => $auth, 'nlgroups' => $nlgroups, 'complaints' => $complaints, 'complaintsdata' => $complaintsdata]);                     
+            return view('main.home', ['onlineusers' => $onlineusers, 'onlinetoday' => $onlinetoday, 'onlineweek' => $onlineweek, 'registered' => $registered, 'cars' => $cars, 'houses' => $houses, 'biz' => $biz, 'flog' => $flog, 'slog' => $slog, 'me' => $me, 'auth' => $auth, 'nlgroups' => $nlgroups, 'complaints' => $complaints, 'complaintsdata' => $complaintsdata]);
         }
 
     	return view('main.home', ['onlineusers' => $onlineusers, 'onlinetoday' => $onlinetoday, 'onlineweek' => $onlineweek, 'registered' => $registered, 'cars' => $cars, 'houses' => $houses, 'biz' => $biz, 'flog' => $flog, 'slog' => $slog, 'me' => $me, 'auth' => $auth, 'complaintsdata' => $complaintsdata, 'banstats' => $banstats]);
@@ -85,7 +85,7 @@ class MainController extends Controller
     {
         $groups = Cache::remember('onlinepage_groups', 60, function() {
             return DB::table('groups')->select('group_name', 'group_id')->get();
-        });     
+        });
 
         $users = Cache::remember('onlinepage', 10, function() {
             return DB::table('users')->select('name', 'user_skin', 'user_level', 'user_group', 'user_hours', 'user_rp')->where('user_status', '>', '0')->get();
@@ -106,20 +106,20 @@ class MainController extends Controller
         });
         $complaints_24h = Cache::remember('staffpage_complaints_24h', 60, function() {
             return DB::table('panel_topics')->whereRaw('time >= CURDATE()')->where('type', '=', 1)->count();
-        });  
+        });
         $newbie = Cache::remember('staffpage_newbie', 60, function() {
             return DB::table('helpers_activity')->where('date', '>=', 'DATE_SUB(CURDATE(), INTERVAL 7 DAY)')->count();
-        });                    
+        });
 
         foreach($data as $d)
         {
             $d->last7 = User::last7($d->id);
-            $d->staffchange = floor((time() - strtotime($d->user_laststaffchange)) / 86400);  
+            $d->staffchange = floor((time() - $d->user_laststaffchange) / 86400);
 
             if($d->user_helper >= 1)
             {
                 $d->last_nre = User::last_nre($d->id);
-            }   
+            }
         }
 
         $me = me();
@@ -170,7 +170,7 @@ class MainController extends Controller
         });
         $biz = Cache::remember('bids_biz', 5, function() {
             return DB::table('businesses')->where('biz_ownerid', '=', 0)->select('id', 'biz_exterior_posX', 'biz_exterior_posY')->get();
-        });        
+        });
 
         return view('main.bids')->with('houses', $houses)->with('biz', $biz);
     }

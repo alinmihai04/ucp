@@ -8,7 +8,8 @@
 <div class="span12 center">
 	Scaneaza codul QR de mai jos pentru a activa autentificarea in 2 pasi<br>
 	<img src="{{ $QR_Image }}"><br>
-	Dupa ce ai scanat codul QR, introdu mai jos codul de securitate oferit de aplicatie pentru a finaliza activarea
+	Dupa ce ai scanat codul QR, introdu mai jos codul de securitate oferit de aplicatie pentru a finaliza activarea<br>
+    Sau introdu urmatorul cod unic in aplicatie: <b> {{ $secret }} </b>
 	{!! Form::open(['url' => url('/2fa')]) !!}
 	<br>
 	{!! Form::label('verify-code', 'Codul de securitate:') !!}
@@ -27,6 +28,6 @@
 	<b>2. Alege prima optiune (Scanati un cod de bare), apoi plasati camera pe codul QR de mai sus</b><br><br>
 	<img src="{{ URL::asset('images/2fa1.png') }}"><br><br>
 	<b>3. Daca totul a mers bine, contul tau va fi integrat in aplicatie</b><br><br>
-	<img src="{{ URL::asset('images/2fa2.png') }}">		
+	<img src="{{ URL::asset('images/2fa2.png') }}">
 </h4>
 @endsection

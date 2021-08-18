@@ -23,7 +23,7 @@ class AdminController extends Controller
 
     		Cache::forget('userdata'.$user.'');
 
-    		return redirect('/profile/'.$userdata->name.'');    		
+    		return redirect('/profile/'.$userdata->name.'');
     	}
     	else
     	{
@@ -112,7 +112,7 @@ class AdminController extends Controller
 
         session()->flash('success', 'Admin function edited!');
         return redirect('/profile/'.$username.'');
-    }   
+    }
     public function fnc($user)
     {
         $validate = User::getName($user);
@@ -143,7 +143,7 @@ class AdminController extends Controller
         session()->flash('success', $text);
 
         return redirect('/profile/'.$name);
-    } 
+    }
 
     public static function clearcache()
     {
@@ -152,7 +152,7 @@ class AdminController extends Controller
         session()->flash('success', 'Panel cache cleared (all data refreshed).');
 
         return redirect('/admin');
-    }   
+    }
 
     public function controlPanel()
     {
@@ -161,7 +161,7 @@ class AdminController extends Controller
         });
         $important = Cache::remember('implogscount', 120, function() {
             return DB::table('player_importantlogs')->count();
-        });        
+        });
         $kill_logs = Cache::remember('klogscount', 120, function() {
             return DB::table('kill_logs')->count();
         });
@@ -170,14 +170,14 @@ class AdminController extends Controller
         });
         $ip_logs = Cache::remember('iplogscount', 120, function() {
             return DB::table('ip_logs')->count();
-        });  
+        });
         $punish_logs = Cache::remember('pplogscount', 120, function() {
             return DB::table('punish_logs')->count();
-        });     
-        
-        $groupdata = Group::loadAllGroups();        
+        });
 
-        $player_logs += $important;           
+        $groupdata = Group::loadAllGroups();
+
+        $player_logs += $important;
 
         $total = $player_logs + $kill_logs + $chat_logs + $ip_logs + $punish_logs;
 
@@ -218,13 +218,13 @@ class AdminController extends Controller
             important_log($user, $me->id, $text, 'edit');
             session()->flash('success', $text);
 
-            Cache::forget('userfh'.$user);        
+            Cache::forget('userfh'.$user);
         }
 
-        DB::table('faction_logs_history')->insert([['id' => $fh, 'text' => $text, 'user' => $me->id, 'user_name' => $me->name]]);  
+        DB::table('faction_logs_history')->insert([['id' => $fh, 'text' => $text, 'user' => $me->id, 'user_name' => $me->name]]);
         return redirect('/profile/'.$name);
 
-        
+
     }
 
     public function editfh($user, $fh)
@@ -234,7 +234,7 @@ class AdminController extends Controller
         if($fhline->isEmpty())
         {
             session()->flash('error', 'Invalid faction log ID.');
-            return redirect('/');           
+            return redirect('/');
         }
 
         return view('admin.editfh')->with('text', $fhline->first()->text)->with('fh', $fh)->with('user', $user);
@@ -282,7 +282,7 @@ class AdminController extends Controller
         if($data->user_admin == 0 && $data->user_helper == 0)
         {
             session()->flash('error', 'Invalid user.');
-            return redirect('/');            
+            return redirect('/');
         }
 
         $me = me();
@@ -300,7 +300,7 @@ class AdminController extends Controller
 
         return redirect('/profile/'.$data->name);
     }
-    public function unban($user)    
+    public function unban($user)
     {
         $me = me();
         $username = User::getName($user);
@@ -355,7 +355,7 @@ class AdminController extends Controller
 
         session()->flash('success', $log);
         return redirect('/profile/' . $data->name);
-    }    
+    }
     public function money($user)
     {
         $data = User::fetchUserData($user);
@@ -386,14 +386,14 @@ class AdminController extends Controller
             }
             else if($data->user_money + $data->user_bankmoney >= $money)
             {
-                $data->user_bankmoney += $data->user_money; 
+                $data->user_bankmoney += $data->user_money;
                 $data->user_bankmoney -= $money;
                 $data->user_money = 0;
             }
             else
             {
                 session()->flash('error', 'Acest jucator nu are atatia bani.');
-                return redirect('/admin/money/' . $user);                
+                return redirect('/admin/money/' . $user);
             }
 
             $txt = "AdmPanel: User " . $data->name . "[user:" . $data->id . "]'s money were modified by Admin " . $me->name . ": -$" . number_format($money);
@@ -411,13 +411,13 @@ class AdminController extends Controller
 
         if($modifier == 2)
         {
-            $log = "Admin " . $me->name . "[admin:" . $me->id . "] edited user " . $data->name . "[user:" . $data->id . "]'s money: +$" . number_format($money);           
+            $log = "Admin " . $me->name . "[admin:" . $me->id . "] edited user " . $data->name . "[user:" . $data->id . "]'s money: +$" . number_format($money);
         }
         else
         {
-            $log = "Admin " . $me->name . "[admin:" . $me->id . "] edited user " . $data->name . "[user:" . $data->id . "]'s money: -$" . number_format($money); 
+            $log = "Admin " . $me->name . "[admin:" . $me->id . "] edited user " . $data->name . "[user:" . $data->id . "]'s money: -$" . number_format($money);
         }
-        
+
         User::where('id', '=', $data->id)->update(['user_money' => $data->user_money, 'user_bankmoney' => $data->user_bankmoney]);
 
         admin_log($me->id, $data->id, $log);
@@ -439,7 +439,7 @@ class AdminController extends Controller
         if($userdata->user_admin <= 0)
         {
             session()->flash('error', 'This player is not an admin.');
-            return redirect('/profile/' . $userdata->name);            
+            return redirect('/profile/' . $userdata->name);
         }
 
         DB::table('users')->where('id', '=', $user)->update(['user_support' => $level]);
@@ -482,14 +482,14 @@ class AdminController extends Controller
             }
             else if($data->user_money + $data->user_bankmoney >= $money)
             {
-                $data->user_bankmoney += $data->user_money; 
+                $data->user_bankmoney += $data->user_money;
                 $data->user_bankmoney -= $money;
                 $data->user_money = 0;
             }
             else
             {
                 session()->flash('error', 'Acest jucator nu are atatia bani.');
-                return redirect('/admin/money/' . $user);                
+                return redirect('/admin/money/' . $user);
             }
 
             $txt = "AdmPanel: User " . $data->name . "[user:" . $data->id . "]'s money were modified by Admin " . $me->name . ": -$" . number_format($money);
@@ -507,20 +507,20 @@ class AdminController extends Controller
 
         if($modifier == 2)
         {
-            $log = "Admin " . $me->name . "[admin:" . $me->id . "] edited user " . $data->name . "[user:" . $data->id . "]'s money: +$" . number_format($money);           
+            $log = "Admin " . $me->name . "[admin:" . $me->id . "] edited user " . $data->name . "[user:" . $data->id . "]'s money: +$" . number_format($money);
         }
         else
         {
-            $log = "Admin " . $me->name . "[admin:" . $me->id . "] edited user " . $data->name . "[user:" . $data->id . "]'s money: -$" . number_format($money); 
+            $log = "Admin " . $me->name . "[admin:" . $me->id . "] edited user " . $data->name . "[user:" . $data->id . "]'s money: -$" . number_format($money);
         }
-        
+
         User::where('id', '=', $data->id)->update(['user_money' => $data->user_money, 'user_bankmoney' => $data->user_bankmoney]);
 
         admin_log($me->id, $data->id, $log);
         session()->flash('success', $log);
 
         Cache::forget('userdata' . $user);
-        return redirect('/complaint/view/' . $topic);        
+        return redirect('/complaint/view/' . $topic);
     }
     public function group_skins($group)
     {
@@ -555,5 +555,63 @@ class AdminController extends Controller
 
         session()->flash('error', 'Skin removed (' . $skin . ').');
         return redirect('/group/skins/' . $group);
-    }    
+    }
+    public function viewGroupslots($group)
+    {
+        $data = Group::where('group_id', '=', $group)->get()->first();
+
+        if(!is_object($data))
+        {
+            session()->flash('error', 'Invalid group data.');
+            return redirect('/admin');
+        }
+
+        return view('admin.editgroup')->with('editAttr', 'slots')->with('group', $data);
+    }
+    public function processGroupslots($group)
+    {
+        if(!isset($_POST['slots']) || !is_numeric($_POST['slots']) || $_POST['slots'] < 0)
+        {
+            session()->flash('error', 'Invalid slots value');
+            return redirect('/admin');
+        }
+
+        DB::table('groups')->where('group_id','=',$group)->update(['group_slots'=>$_POST['slots']]);
+
+        $me = me();
+        $log = "Admin " . $me->name . "[admin:" . $me->id . "] changed [group:" . $group . "] slots to " . $_POST['slots'] . ".";
+        important_log($me->id, 0, $log, "edit group");
+
+        session()->flash('success', 'Group id ' . $group . ' slots changed to ' . $_POST['slots']);
+        return redirect('/admin');
+    }
+    public function viewGroupLevel($group)
+    {
+        $data = Group::where('group_id', '=', $group)->get()->first();
+
+        if(!is_object($data))
+        {
+            session()->flash('error', 'Invalid group data.');
+            return redirect('/admin');
+        }
+
+        return view('admin.editgroup')->with('editAttr', 'level')->with('group', $data);
+    }
+    public function processGrouplevel($group)
+    {
+        if(!isset($_POST['level']) || !is_numeric($_POST['level']) || $_POST['level'] < 0)
+        {
+            session()->flash('error', 'Invalid level value');
+            return redirect('/admin');
+        }
+
+        DB::table('groups')->where('group_id','=',$group)->update(['group_level'=>$_POST['level']]);
+
+        $me = me();
+        $log = "Admin " . $me->name . "[admin:" . $me->id . "] changed [group:" . $group . "] level to " . $_POST['level'] . ".";
+        important_log($me->id, 0, $log, "edit group");
+
+        session()->flash('success', 'Group id ' . $group . ' level changed to ' . $_POST['level']);
+        return redirect('/admin');
+    }
 }

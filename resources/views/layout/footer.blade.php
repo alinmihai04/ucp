@@ -5,9 +5,9 @@
 </a>
 <div class="center">
 	<hr>
-	(c) localhost.pl  /
-	<a href="/terms">terms and conditions</a> / <a href="/privacy">privacy policy</a>
-	/ <a href="/contact">contact</a>
+	(c) demo  /
+	<a href="{{ url('/terms') }}">terms and conditions</a> / <a href="{{ url('/privacy') }}">privacy policy</a>
+	/ <a href="{{ url('/contact') }}">contact</a>
 	<br>
 	<img src="{{URL::asset('images/paysafecard.gif')}}" style="max-width: 150px"/>
 </div></div></div></div>

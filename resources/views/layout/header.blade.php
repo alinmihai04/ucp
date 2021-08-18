@@ -63,7 +63,7 @@ $header_bids = App\Header::countHeaderBids();
 								</a>
 							</li>
 							<li>
-								<a href="{{url('/changemail')}}">
+								<a href="{{url('/user/changemail/' . $me->id)}}">
 								<i class="icon-envelope"></i>
 									Schimba e-mail
 								</a>
@@ -228,14 +228,6 @@ $header_bids = App\Header::countHeaderBids();
 					<span class="badge badge-yellow">{{ $header_bids }}</span>
 				</a>
 			</li>
-			@if(is_object($me) && $me->user_admin > 0)
-				<li>
-					<a href="{{url('/logs')}}">
-						<i class="icon-keyboard"></i>
-						<span class="menu-text"> Logs </span>
-					</a>
-				</li>
-			@endif
 		</ul>
 		<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
 			<i id="sidebar-toggle-icon" class="ace-save-state ace-icon icon-double-angle-left" data-icon1="ace-icon icon-double-angle-left" data-icon2="ace-icon icon-double-angle-right"></i>

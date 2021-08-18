@@ -148,7 +148,6 @@
 				<h4>Admin Tools</h4>
 				<div class="hr hr8 hr-double"></div>
 				<ul>
-					<li><a href="{{url('/logs/admin/' . $data->id)}}">admin logs</a></li>
 					<li><a href="{{url('/logs/important/'.$data->id)}}">player important logs</a></li>
 					<li><a href="{{url('/logs/player/'.$data->id)}}">player logs</a></li>
 					<li><a href="{{url('/logs/chat/'.$data->id)}}">chat logs</a></li>
@@ -204,22 +203,11 @@
 					</div>
 				</div>
 				<div class="space-4"></div>
-				@if($auth && $data->id == $me->id)
-					<a class="btn btn-warning btn-small" href="{{ url('/pm') }}"><i class="icon-envelope"></i> Mesajele mele</a>
-				@else
+				@if(!$auth || $data->id != $me->id)
 					<a class="btn btn-danger btn-small" href="{{ url('/complaint/create/' . $data->id) }}"><i class="icon-legal"></i> Reclama player</a>
 				@endif
 				<div class="space-4"></div>
 				@if($auth)
-					@if($data->id != $me->id)
-						<a class="btn btn-warning btn-small" href="{{ url('/pm') }}"><i class="icon-envelope"></i> Trimite mesaj</a>
-						<div class="space-4"></div>
-						@if($friends->where('friendof', '=', $me->id)->count() >= 1)
-							<a class="btn btn-danger btn-small" href="{{ url('/friends/remove/' . $data->id) }}"><i class="icon-user"></i> Sterge prieten</a>
-						@else
-							<a class="btn btn-success btn-small" href="{{ url('/friends/add/' . $data->id) }}"><i class="icon-plus"></i> Adauga prieten</a>
-						@endif
-					@endif
 					@if($me->id == $data->id && $data->user_group != 0)
 						<hr>
 						@if($data->user_shownskin == 0)
@@ -402,7 +390,7 @@
                 			Email
                 		</div>
                 		<div class="profile-info-value">
-                			{{ $data->user_email }} <a href="{{ url('/changemail/'.$data->id) }}"><i class="icon-edit"></i></a>
+                			{{ $data->user_email }} <a href="{{ url('/user/changemail/'.$data->id) }}"><i class="icon-edit"></i></a>
                 		</div>
             		</div>
             		@endif
@@ -578,7 +566,7 @@
 									<a href='{{ url('/map/'.$house->house_exterior_posX.'/'.$house->house_exterior_posY) }}'><i class='icon-map-marker'></i> display on map</a>
 									@if($auth && $me->user_admin > 0)
 										<br>
-										<a href="{{ url('/logs/house/' . $house->id) }}"><i class="icon-archive"></i> view logs</a>
+										<a href="{{ url('/logs/house/' . $house->id) }}"><i class="icon-archive"></i> view logs (not implemented)</a>
 									@endif
 								@endif
 							</div>
@@ -604,7 +592,7 @@
 									<a href='{{ url('/map/' . $biz->biz_exterior_posX . '/' . $biz->biz_exterior_posY) }}'><i class='icon-map-marker'></i> display on map</a>
 									@if($auth && $me->user_admin > 0)
 										<br>
-										<a href="{{ url('/logs/biz/' . $house->id) }}"><i class="icon-archive"></i> view logs</a>
+										<a href="{{ url('/logs/biz/' . $biz->id) }}"><i class="icon-archive"></i> view logs (not implemented)</a>
 									@endif
 								@endif
 							</div>

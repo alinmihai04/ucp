@@ -24,23 +24,23 @@
 				@endif
 				<td>Faction Raport</td>
 				<td>Raport Process Date</td>
-				<td>Options</td>				
+				<td>Options</td>
 			</tr>
 			@foreach($data as $m)
 				<tr>
 					<td><img src="{{ URL::asset('images/avatars/' . $m->user_groupskin) }}.png" style="width: 15px"> <a href="{{ url('/profile/' . $m->name) }}">{{ $m->name }}</a></td>
 					<td>
-						{{ $m->rank }} 
+						{{ $m->rank }}
 						@if($m->fgroup == 11)
-							<span class="label label-success arrowed-in-right"><i class="icon-certificate white"></i> tester</span>							
-						@endif 
+							<span class="label label-success arrowed-in-right"><i class="icon-certificate white"></i> tester</span>
+						@endif
 					</td>
 					<td>{{ $m->fw }}</td>
 					<td>{{ $m->days }}</td>
 					<td>{{ $m->last_login }}</td>
 					@if($grouptype == 6)
 						<td>{{ $m->war_kills }} kills / {{ $m->war_deaths }} deaths</td>
-					@endif					
+					@endif
 					<td>
 						@foreach($goals as $g)
 
@@ -71,14 +71,14 @@
 										{{ gmdate('H:i', 0) }}/{{ gmdate('H:i', $g->goal) }}<br>
 									@else
 										{{ 0 }}/{{ $g->goal }}<br>
-									@endif									
-								@endif								
+									@endif
+								@endif
 							@endif
 
 						@endforeach
 					</td>
 					<td>{{ $m->raport_process }}</td>
-					<td><a class="btn btn-danger btn-small" href="#">Reclama player</a></td>
+					<td><a class="btn btn-danger btn-small" href="{{ url('complaint/create/' . $m->id) }}">Reclama player</a></td>
 				</tr>
 			@endforeach
 		</tbody>

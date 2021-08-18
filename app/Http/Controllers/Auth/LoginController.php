@@ -34,6 +34,11 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        if(isset($_POST['force_2fa']))
+        {
+            session()->put('force_2fa', 'true');
+            $_POST['force_2fa'] = null;
+        }
         $this->middleware('guest')->except('logout');
     }
 }

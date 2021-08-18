@@ -12,8 +12,10 @@
 <div class="page-header">
 	<h1>{{ $data->group_name }}</h1>
 </div>
+<span class="text-error">APPLICATIONS ARE NOT IMPLEMENTED!!!</span><br>
 <ul>
 	<li>
+
 		@if($data->group_application == 1)
 			<a href="{{ url('/group/app/' . $data->group_id) }}" onclick="return confirm('Esti sigur ca vrei sa inchizi aplicatiile?');">Inchide aplicatii</a>
 		@else

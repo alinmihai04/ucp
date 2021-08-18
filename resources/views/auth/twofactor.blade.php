@@ -19,5 +19,19 @@
 </p>
 <br>
 
-<a href="{{ url('/account/security/code') }}" class="btn btn-purple">Configureaza aplicatia</a>
+@if($userdata->user_2fa == 0)
+    <a href="{{ url('/account/security/code') }}" class="btn btn-purple">Configureaza aplicatia</a>
+@else
+    <span class="text-error">Autentificarea in doi pasi este deja activata pe acest cont.</span>
+
+    <h2>Dezactiveaza autentificarea in doi pasi</h2>
+    <hr>
+
+    {!! Form::open(['url' => route('2fa_disable')]) !!}
+    {!! Form::label('password', 'Parola curenta:') !!}
+    {!! Form::password('password') !!}
+    <br>
+    {!! Form::submit('Dezactiveaza', ['class' => 'btn btn-md btn-danger']) !!}
+    {!! Form::close() !!}
+    @endif
 @endsection

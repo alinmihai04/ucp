@@ -33,13 +33,13 @@ class LogsController extends Controller
         }
 
         return view('logs.logs', ['data' => $data, 'username' => User::getName($user), 'user' => $user]);
-    }    
+    }
     public static function chat($user)
     {
         if(Auth::check() && me()->user_admin < 5)
         {
             session()->flash('error', 'Unauthorized access.');
-            return redirect('/');            
+            return redirect('/');
         }
 
         $data = DB::table('chat_logs')->where('user_id', '=', $user)->orderBy('entry_id', 'desc')->paginate(50);
@@ -51,7 +51,7 @@ class LogsController extends Controller
         }
 
         return view('logs.logs', ['data' => $data, 'username' => User::getName($user), 'user' => $user]);
-    }  
+    }
     public static function vehicle($vehicle)
     {
         $data = DB::table('vehicle_logs')->where('vehicleid', '=', $vehicle)->orderBy('entry', 'desc')->paginate(50);
@@ -63,7 +63,7 @@ class LogsController extends Controller
         }
 
         return view('logs.vehicle', ['data' => $data, 'name' => 'vehicle id: '.$vehicle, 'id' => $vehicle]);
-    }  
+    }
     public static function clan($clan)
     {
         $data = DB::table('clan_logs')->where('clanid', '=', $clan)->orderBy('id', 'desc')->paginate(50);
@@ -75,5 +75,11 @@ class LogsController extends Controller
         }
 
         return view('logs.clan', ['data' => $data, 'clan' => $clan]);
-    }      
+    }
+    public function raport()
+    {
+        $data = DB::table('raport_logs')->orderBy('id', 'desc')->paginate(50);
+
+        return view('logs.raport')->with('data', $data);
+    }
 }
