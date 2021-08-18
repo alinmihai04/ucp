@@ -117,7 +117,7 @@ class UserController extends Controller
         imagettftext($img, 10, 0.0, 190, 30, $color_white, $font, "Nick: " .$user->name);
         ImageTTFText($img, 10, 0.0, 190, 43, $color_white, $font, "Level: ".$user->user_level);
         ImageTTFText($img, 10, 0.0, 190, 56, $color_white, $font, "Respect points: ".$user->user_rp);
-        ImageTTFText($img, 10, 0.0, 190, 69, $color_white, $font, "Hours played: ".$user->user_hours);
+        ImageTTFText($img, 10, 0.0, 190, 69, $color_white, $font, "Hours played: ". intval($user->user_hours));
         ImageTTFText($img, 10, 0.0, 190, 82, $color_white, $font, "Phone number: ".$user->user_phonenr);
         ImageTTFText($img, 10, 0.0, 190, 95, $color_white, $font, "Job: ".Job::getJobName($user->user_job));
         if($user->user_group > 0)
